@@ -5,14 +5,14 @@
     tools:context=".MainActivity" >
 
     <com.tywholland.projectcanvas.TouchImageView
-        android:contentDescription="Image to manipulate"
         android:id="@+id/imageView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/button1"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_launcher" />
 
@@ -22,6 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Button" />
+        android:text="Open Image" />
 
 </RelativeLayout>

@@ -9,19 +9,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 
 public class MainActivity extends Activity {
 
 	private TouchImageView mImageView;
 	private Button mButton;
+	private Bitmap mImage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mImage = null;
 		setContentView(R.layout.activity_main);
 		mImageView = (TouchImageView) findViewById(R.id.imageView1);
 		mButton = (Button) findViewById(R.id.button1);
@@ -50,15 +52,17 @@ public class MainActivity extends Activity {
 				cursor.moveToFirst();
 
 				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-				String filePath = cursor.getString(columnIndex); // file path of
-																	// selected
-																	// image
+				// file path of selected image
+				String filePath = cursor.getString(columnIndex);
 				cursor.close();
 				// Convert file path into bitmap image using below line.
-				Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+				mImage = BitmapFactory.decodeFile(filePath);
+				mImage = Bitmap.createScaledBitmap(mImage,
+						Math.min(mImage.getWidth(), 2048),
+						Math.min(mImage.getHeight(), 2048), true);
 
 				// put bitmapimage in your imageview
-				mImageView.setImageBitmap(yourSelectedImage);
+				mImageView.setImageBitmap(mImage);
 			}
 		}
 	}
@@ -67,7 +71,24 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
+
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO: Make this a thread
+		if (mImage != null) {
+
+			switch (item.getItemId()) {
+			case R.id.greyscale:
+				mImageView.setImageBitmap(Filters.doGreyscale(mImage));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+			}
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }
