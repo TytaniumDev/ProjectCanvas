@@ -41,4 +41,64 @@ public class Filters {
 		// return final image
 		return bmOut;
 	}
+
+	public static Bitmap doRGB(Bitmap src) {
+		// get image size
+		int width = src.getWidth();
+		int height = src.getHeight();
+		// create output bitmap
+		Bitmap bmOut = Bitmap.createBitmap(width, height, src.getConfig());
+		// pixel information
+		int A, R, G, B;
+		int pixel;
+
+		// scan through every single pixel
+		for (int x = 0; x < width; ++x) {
+			for (int y = 0; y < height; ++y) {
+				// get one pixel color
+				pixel = src.getPixel(x, y);
+				// retrieve color of all channels
+				A = Color.alpha(pixel);
+				R = Color.red(pixel);
+				G = Color.green(pixel);
+				B = Color.blue(pixel);
+				// set new pixel color to highest value out of RGB, and only use
+				// that color
+				bmOut.setPixel(x, y, Color.argb(A, R > G && R > B ? R : 0, G > R && G > B ? G : 0, B > G && B > R ? B : 0));
+			}
+		}
+
+		// return final image
+		return bmOut;
+	}
+	
+	public static Bitmap doRGBMaxed(Bitmap src) {
+		// get image size
+		int width = src.getWidth();
+		int height = src.getHeight();
+		// create output bitmap
+		Bitmap bmOut = Bitmap.createBitmap(width, height, src.getConfig());
+		// pixel information
+		int A, R, G, B;
+		int pixel;
+
+		// scan through every single pixel
+		for (int x = 0; x < width; ++x) {
+			for (int y = 0; y < height; ++y) {
+				// get one pixel color
+				pixel = src.getPixel(x, y);
+				// retrieve color of all channels
+				A = Color.alpha(pixel);
+				R = Color.red(pixel);
+				G = Color.green(pixel);
+				B = Color.blue(pixel);
+				// set new pixel color to highest value out of RGB, and only use
+				// that color
+				bmOut.setPixel(x, y, Color.argb(A, R > G && R > B ? 255 : 0, G > R && G > B ? 255 : 0, B > G && B > R ? 255 : 0));
+			}
+		}
+
+		// return final image
+		return bmOut;
+	}
 }

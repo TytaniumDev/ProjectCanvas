@@ -20,8 +20,16 @@
         android:id="@+id/button1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/savebutton"
         android:layout_centerHorizontal="true"
         android:text="Open Image" />
+    
+    <Button
+        android:id="@+id/savebutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Save Image" />
 
 </RelativeLayout>
